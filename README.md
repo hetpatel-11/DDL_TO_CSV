@@ -78,13 +78,22 @@ CREATE TABLE customers (
 
 ## 🔧 How It Works
 
-### Data Consistency Features
+### Current Data Consistency Features
 
-The application ensures data consistency by:
+The application currently ensures basic consistency by:
 
 1. **Profile Generation**: Creates a complete profile for each row
-2. **Cross-field Validation**: Ensures related fields are consistent
-3. **Realistic Relationships**: Name → Email, Location → Phone, etc.
+2. **Name-Email Consistency**: Ensures names and emails match (e.g., John Smith → john.smith@domain.com)
+3. **Basic Field Mapping**: Maps common field names to appropriate data types
+
+### Current Limitations
+
+⚠️ **Important**: The current version has limited consistency beyond name-email matching:
+
+- **Geographic Inconsistency**: City, state, and country may not be logically related
+- **Phone-Location Mismatch**: Phone area codes may not match the geographic location
+- **Age-Date Inconsistency**: Age and birth dates may not align properly
+- **Limited Cross-field Validation**: Most fields are generated independently
 
 ### Supported Data Types
 
@@ -99,19 +108,21 @@ The application ensures data consistency by:
 The app intelligently maps common field names:
 
 - `first_name`, `last_name` → Realistic names
-- `email`, `mail` → Matching email addresses
-- `phone`, `telephone` → Phone numbers
-- `city`, `state`, `country` → Geographic consistency
-- `age`, `birth_date` → Age-appropriate dates
+- `email`, `mail` → Matching email addresses (consistent with names)
+- `phone`, `telephone` → Phone numbers (may not match location)
+- `city`, `state`, `country` → Individual realistic values (may not be geographically consistent)
+- `age`, `birth_date` → Realistic values (may not be chronologically consistent)
 - `created_at`, `updated_at` → Realistic timestamps
 
 ## 📊 Output
 
 The generated CSV will contain:
-- **Consistent data** across all fields
-- **Realistic values** that make sense together
+- **Basic consistency** between names and emails
+- **Realistic individual values** for each field
 - **Proper formatting** matching the DDL specifications
 - **Auto-incrementing IDs** where appropriate
+
+⚠️ **Note**: While individual fields contain realistic data, cross-field consistency (geographic, chronological, etc.) is limited in the current version.
 
 ## 🎨 UI Features
 
@@ -128,15 +139,30 @@ The generated CSV will contain:
 | 1 | John | Smith | john.smith@example.com | +1-555-123-4567 | 28 | New York | NY | true |
 | 2 | Sarah | Johnson | sarah.johnson@example.com | +1-555-987-6543 | 34 | Los Angeles | CA | true |
 
+**Note**: In this example, the name-email consistency is maintained, but geographic consistency (city/state combinations) and phone area codes may not match the actual locations.
+
 ## 🚀 Advanced Usage
 
 ### Custom Field Mapping
 
 The application automatically detects field patterns, but you can extend it by modifying the `generate_consistent_row` function in `streamlit_app.py`.
 
+### Improving Data Consistency
+
+To enhance cross-field consistency, consider:
+
+1. **Geographic Consistency**: Implement location-based phone number generation
+2. **Age-Date Alignment**: Ensure birth dates match the specified age
+3. **Regional Data**: Use location-specific data providers
+4. **Cross-field Validation**: Add validation rules for related fields
+
 ### Batch Processing
 
 For multiple tables, run the application multiple times or modify the code to handle multiple DDL statements.
+
+### Alternative: AI-Powered Version
+
+For better consistency, try the AI-powered version (`ai_fake_data_generator.py`) which uses Claude to generate more contextually consistent data.
 
 ## 🤝 Contributing
 
